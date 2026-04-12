@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# ASP.NET Core / Razor
+appsettings.*.local.json
+
+# Publish output
+publish/
+
+# Node (if used for frontend tooling)
+node_modules/
