@@ -1,7 +1,17 @@
+using MongoDB.Driver;
+using TaskManager.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection(MongoSettings.SectionName));
+builder.Services.AddSingleton<IMongoClient>(_ =>
+{
+    var connectionString = builder.Configuration[$"{MongoSettings.SectionName}:{nameof(MongoSettings.ConnectionString)}"]
+        ?? "mongodb://localhost:27017";
+    return new MongoClient(connectionString);
+});
 
 var app = builder.Build();
 
