@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using TaskManager.Configuration;
+using TaskManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
         ?? "mongodb://localhost:27017";
     return new MongoClient(connectionString);
 });
+builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<TaskService>();
 
 var app = builder.Build();
 
