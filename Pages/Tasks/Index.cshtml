@@ -1,0 +1,40 @@
+@page
+@model TaskManager.Pages.Tasks.IndexModel
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<h1>Tasks</h1>
+
+@if (!Model.Tasks.Any())
+{
+    <div class="alert alert-info" role="alert">
+        No tasks found.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Tags</th>
+                <th>Done</th>
+                <th>UserId</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@string.Join(", ", task.Tags)</td>
+                <td>@(task.IsDone ? "Yes" : "No")</td>
+                <td>@task.UserId</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
