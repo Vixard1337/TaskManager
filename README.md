@@ -1,6 +1,6 @@
 # TaskManager
 
-TaskManager is a simple `ASP.NET Core Razor Pages` application for managing tasks and users, prepared for a NoSQL approach with `MongoDB`.
+TaskManager is a simple `ASP.NET Core Razor Pages` application for managing tasks and users with a `MongoDB` backend.
 
 ## Project goal
 
@@ -15,12 +15,32 @@ The project is designed as a student-friendly task management system that can be
 
 ## Current setup
 
-This commit prepares the project for MongoDB integration:
+The project currently includes:
 
 - Added `MongoDb` section in `appsettings.json`
 - Added strongly typed settings class: `Configuration/MongoSettings.cs`
 - Registered MongoDB settings and `IMongoClient` in `Program.cs`
 - Added `MongoDB.Driver` package reference
+- Added domain models: `Models/User.cs`, `Models/TaskItem.cs`
+- Added MongoDB services: `Services/UserService.cs`, `Services/TaskService.cs`
+- Added Razor Pages for users:
+  - `Pages/Users/Index` (list users)
+  - `Pages/Users/Create` (create user)
+- Added Razor Page for tasks:
+  - `Pages/Tasks/Index` (list tasks)
+- Updated navigation in `Pages/Shared/_Layout.cshtml`
+
+## How to run
+
+1. Start MongoDB locally (default: `mongodb://localhost:27017`).
+2. Verify MongoDB settings in `appsettings.json`.
+3. Run the application:
+
+`dotnet run`
+
+4. Open the app in browser and use:
+   - `/Users/Index`
+   - `/Tasks/Index`
 
 ## MongoDB configuration
 
@@ -37,7 +57,7 @@ Default local connection:
 
 ## Next steps
 
-1. Add domain models (`User`, `TaskItem`)
-2. Add services/repositories for MongoDB collections
-3. Build Razor Pages for task/user CRUD
-4. Add filtering by tags and task status updates
+1. Add `Tasks/Create` page with user assignment
+2. Add `Tasks/Edit` and `Tasks/Delete`
+3. Add `Done/Undo` action for tasks
+4. Add tag filtering on tasks list
