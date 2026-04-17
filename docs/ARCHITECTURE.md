@@ -45,6 +45,7 @@ Each page keeps UI markup in `.cshtml` and request logic in `.cshtml.cs`.
 
 Examples:
 - `Pages/Tasks/Index.cshtml` + `Pages/Tasks/Index.cshtml.cs`
+- `Pages/Tasks/Create.cshtml` + `Pages/Tasks/Create.cshtml.cs`
 - `Pages/Users/Create.cshtml` + `Pages/Users/Create.cshtml.cs`
 
 ## Current flow
@@ -52,6 +53,14 @@ Examples:
 2. `PageModel` uses injected service
 3. Service executes MongoDB operation
 4. Data is returned to the Razor Page view
+
+## Write flow example (task creation)
+1. User opens `Pages/Tasks/Create`
+2. `CreateModel` loads users via `UserService`
+3. User submits form (`Title`, `Description`, `UserId`, `TagsInput`)
+4. `CreateModel` validates input and parses tags
+5. `TaskService` writes the new `TaskItem` to MongoDB
+6. Request is redirected to `Pages/Tasks/Index`
 
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup

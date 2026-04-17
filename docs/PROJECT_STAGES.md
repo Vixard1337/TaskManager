@@ -43,9 +43,18 @@ This document tracks the project progress in chronological order.
   - run instructions
   - refreshed next steps
 
+## Stage 7 — Task creation page
+- Added:
+  - `Pages/Tasks/Create.cshtml`
+  - `Pages/Tasks/Create.cshtml.cs`
+- Implemented task creation flow with:
+  - user assignment (`UserId`)
+  - comma-separated tags parsing
+  - basic validation
+- Updated `Pages/Tasks/Index.cshtml` with `Add task` button
+
 ## Next planned stages
-1. Add `Tasks/Create` with user assignment
-2. Add `Tasks/Edit` and `Tasks/Delete`
-3. Add `Done/Undo` action on tasks
-4. Add tag filtering on tasks list
-5. Add screenshots and diagrams for project documentation
+1. Add `Tasks/Edit` and `Tasks/Delete`
+2. Add `Done/Undo` action on tasks
+3. Add tag filtering on tasks list
+4. Add screenshots and diagrams for project documentation
