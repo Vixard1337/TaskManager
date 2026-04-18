@@ -53,8 +53,20 @@ This document tracks the project progress in chronological order.
   - basic validation
 - Updated `Pages/Tasks/Index.cshtml` with `Add task` button
 
+## Stage 8 — Task edit and delete pages
+- Added:
+  - `Pages/Tasks/Edit.cshtml`
+  - `Pages/Tasks/Edit.cshtml.cs`
+  - `Pages/Tasks/Delete.cshtml`
+  - `Pages/Tasks/Delete.cshtml.cs`
+- Implemented task update flow with:
+  - loading current task by `id`
+  - editing title, description, tags, and assigned user
+  - basic validation on submit
+- Implemented task delete confirmation flow
+- Updated `Pages/Tasks/Index.cshtml` with `Edit` and `Delete` actions
+
 ## Next planned stages
-1. Add `Tasks/Edit` and `Tasks/Delete`
-2. Add `Done/Undo` action on tasks
-3. Add tag filtering on tasks list
-4. Add screenshots and diagrams for project documentation
+1. Add `Done/Undo` action on tasks
+2. Add tag filtering on tasks list
+3. Add screenshots and diagrams for project documentation

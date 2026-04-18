@@ -25,6 +25,7 @@ else
                 <th>Tags</th>
                 <th>Done</th>
                 <th>UserId</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,10 @@ else
                 <td>@string.Join(", ", task.Tags)</td>
                 <td>@(task.IsDone ? "Yes" : "No")</td>
                 <td>@task.UserId</td>
+                <td>
+                    <a asp-page="/Tasks/Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-page="/Tasks/Delete" asp-route-id="@task.Id" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
+                </td>
             </tr>
         }
         </tbody>

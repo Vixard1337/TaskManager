@@ -46,6 +46,8 @@ Each page keeps UI markup in `.cshtml` and request logic in `.cshtml.cs`.
 Examples:
 - `Pages/Tasks/Index.cshtml` + `Pages/Tasks/Index.cshtml.cs`
 - `Pages/Tasks/Create.cshtml` + `Pages/Tasks/Create.cshtml.cs`
+- `Pages/Tasks/Edit.cshtml` + `Pages/Tasks/Edit.cshtml.cs`
+- `Pages/Tasks/Delete.cshtml` + `Pages/Tasks/Delete.cshtml.cs`
 - `Pages/Users/Create.cshtml` + `Pages/Users/Create.cshtml.cs`
 
 ## Current flow
@@ -61,6 +63,14 @@ Examples:
 4. `CreateModel` validates input and parses tags
 5. `TaskService` writes the new `TaskItem` to MongoDB
 6. Request is redirected to `Pages/Tasks/Index`
+
+## Update/Delete flow example (task maintenance)
+1. User clicks `Edit` or `Delete` on `Pages/Tasks/Index`
+2. `PageModel` loads current task by `id` from `TaskService`
+3. Edit path: user updates values and submits form
+4. `TaskService.UpdateAsync(...)` saves updated document in MongoDB
+5. Delete path: user confirms removal
+6. `TaskService.DeleteAsync(...)` removes document from MongoDB
 
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup
