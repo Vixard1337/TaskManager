@@ -72,6 +72,12 @@ Examples:
 5. Delete path: user confirms removal
 6. `TaskService.DeleteAsync(...)` removes document from MongoDB
 
+## Status toggle flow example (Done/Undo)
+1. User clicks `Done` or `Undo` on `Pages/Tasks/Index`
+2. `IndexModel.OnPostToggleDoneAsync(string id)` loads task by `id`
+3. `TaskService.SetDoneAsync(...)` updates `IsDone` in MongoDB
+4. Request is redirected to refreshed `Pages/Tasks/Index`
+
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup
 - Keep project progress updated in `docs/PROJECT_STAGES.md`

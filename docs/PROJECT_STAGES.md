@@ -66,7 +66,11 @@ This document tracks the project progress in chronological order.
 - Implemented task delete confirmation flow
 - Updated `Pages/Tasks/Index.cshtml` with `Edit` and `Delete` actions
 
+## Stage 9 — Done/Undo action on tasks
+- Extended `Pages/Tasks/Index.cshtml.cs` with `OnPostToggleDoneAsync(string id)` handler
+- Added inline `Done/Undo` action button in `Pages/Tasks/Index.cshtml`
+- Reused `TaskService.SetDoneAsync(...)` to update completion status in MongoDB
+
 ## Next planned stages
-1. Add `Done/Undo` action on tasks
-2. Add tag filtering on tasks list
-3. Add screenshots and diagrams for project documentation
+1. Add tag filtering on tasks list
+2. Add screenshots and diagrams for project documentation

@@ -38,6 +38,12 @@ else
                 <td>@(task.IsDone ? "Yes" : "No")</td>
                 <td>@task.UserId</td>
                 <td>
+                    <form method="post" asp-page-handler="ToggleDone" class="d-inline">
+                        <input type="hidden" name="id" value="@task.Id" />
+                        <button type="submit" class="btn btn-sm @(task.IsDone ? "btn-outline-warning" : "btn-outline-success")">
+                            @(task.IsDone ? "Undo" : "Done")
+                        </button>
+                    </form>
                     <a asp-page="/Tasks/Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                     <a asp-page="/Tasks/Delete" asp-route-id="@task.Id" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
                 </td>
