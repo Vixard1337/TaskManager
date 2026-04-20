@@ -27,8 +27,16 @@ The project currently includes:
   - `Pages/Users/Index` (list users)
   - `Pages/Users/Create` (create user)
 - Added Razor Page for tasks:
-  - `Pages/Tasks/Index` (list tasks)
+  - `Pages/Tasks/Index` (list + filter by tag + Done/Undo)
+  - `Pages/Tasks/Create` (create task with user assignment and tags)
+  - `Pages/Tasks/Edit` (edit task)
+  - `Pages/Tasks/Delete` (delete confirmation)
 - Updated navigation in `Pages/Shared/_Layout.cshtml`
+- Added project documentation assets:
+  - `docs/PROJECT_STAGES.md`
+  - `docs/ARCHITECTURE.md`
+  - `docs/DIAGRAMS.md`
+  - `docs/SCREENSHOTS.md`
 
 ## How to run
 
@@ -57,7 +65,6 @@ Default local connection:
 
 ## Next steps
 
-1. Add `Tasks/Create` page with user assignment
-2. Add `Tasks/Edit` and `Tasks/Delete`
-3. Add `Done/Undo` action for tasks
-4. Add tag filtering on tasks list
+1. Capture screenshots from implemented pages
+2. Export class and use case diagrams for report
+3. Final report assembly (sections 1–8)

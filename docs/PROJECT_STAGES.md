@@ -82,5 +82,13 @@ This document tracks the project progress in chronological order.
   - active filter indicator
 - Preserved selected filter after `Done/Undo` action
 
+## Stage 11 — Documentation assets (diagrams and screenshots)
+- Added `docs/DIAGRAMS.md` with:
+  - class diagram draft (User–TaskItem relation)
+  - use case diagram draft (core user actions)
+- Added `docs/SCREENSHOTS.md` with:
+  - screenshot checklist for report section 5
+  - naming convention for exported images
+
 ## Next planned stages
-1. Add screenshots and diagrams for project documentation
+1. Capture screenshots and export diagrams as images for final report

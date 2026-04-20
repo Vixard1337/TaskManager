@@ -89,3 +89,7 @@ Examples:
 - Keep business/data access logic in `Services/`, not in page markup
 - Keep project progress updated in `docs/PROJECT_STAGES.md`
 - Update this file when new architectural decisions are introduced
+
+## Documentation artifacts
+- `docs/DIAGRAMS.md` — draft class and use case diagrams (Mermaid)
+- `docs/SCREENSHOTS.md` — checklist and naming convention for report screenshots
