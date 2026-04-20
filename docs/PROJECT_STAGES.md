@@ -71,6 +71,16 @@ This document tracks the project progress in chronological order.
 - Added inline `Done/Undo` action button in `Pages/Tasks/Index.cshtml`
 - Reused `TaskService.SetDoneAsync(...)` to update completion status in MongoDB
 
+## Stage 10 — Tag filtering on tasks list
+- Extended `Pages/Tasks/Index.cshtml.cs` with GET filter support (`Tag`)
+- Added filtering logic:
+  - all tasks when filter is empty
+  - `TaskService.GetByTagAsync(...)` when tag is provided
+- Added filter UI in `Pages/Tasks/Index.cshtml` with:
+  - tag input
+  - `Filter` and `Clear` actions
+  - active filter indicator
+- Preserved selected filter after `Done/Undo` action
+
 ## Next planned stages
-1. Add tag filtering on tasks list
-2. Add screenshots and diagrams for project documentation
+1. Add screenshots and diagrams for project documentation

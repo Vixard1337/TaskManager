@@ -7,14 +7,23 @@ namespace TaskManager.Pages.Tasks;
 
 public class IndexModel(TaskService taskService) : PageModel
 {
+    [BindProperty(SupportsGet = true)]
+    public string Tag { get; set; } = string.Empty;
+
     public List<TaskItem> Tasks { get; private set; } = [];
 
     public async Task OnGetAsync()
     {
-        Tasks = await taskService.GetAllAsync();
+        if (string.IsNullOrWhiteSpace(Tag))
+        {
+            Tasks = await taskService.GetAllAsync();
+            return;
+        }
+
+        Tasks = await taskService.GetByTagAsync(Tag.Trim());
     }
 
-    public async Task<IActionResult> OnPostToggleDoneAsync(string id)
+    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag)
     {
         var task = await taskService.GetByIdAsync(id);
         if (task is null)
@@ -23,6 +32,11 @@ public class IndexModel(TaskService taskService) : PageModel
         }
 
         await taskService.SetDoneAsync(id, !task.IsDone);
-        return RedirectToPage("/Tasks/Index");
+        if (string.IsNullOrWhiteSpace(tag))
+        {
+            return RedirectToPage("/Tasks/Index");
+        }
+
+        return RedirectToPage("/Tasks/Index", new { tag = tag.Trim() });
     }
 }

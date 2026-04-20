@@ -78,6 +78,13 @@ Examples:
 3. `TaskService.SetDoneAsync(...)` updates `IsDone` in MongoDB
 4. Request is redirected to refreshed `Pages/Tasks/Index`
 
+## Read flow example (tag filtering)
+1. User enters a tag on `Pages/Tasks/Index` and submits GET filter form
+2. `IndexModel` receives filter through `Tag` (`SupportsGet = true`)
+3. If filter is empty, `TaskService.GetAllAsync()` is used
+4. If filter is provided, `TaskService.GetByTagAsync(...)` is used
+5. Filtered list is rendered in the same index view
+
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup
 - Keep project progress updated in `docs/PROJECT_STAGES.md`

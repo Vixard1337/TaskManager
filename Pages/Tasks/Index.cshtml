@@ -9,6 +9,22 @@
     <a asp-page="/Tasks/Create" class="btn btn-primary">Add task</a>
 </div>
 
+<form method="get" class="row g-2 align-items-end mb-3">
+    <div class="col-sm-6 col-md-4">
+        <label asp-for="Tag" class="form-label">Filter by tag</label>
+        <input asp-for="Tag" class="form-control" placeholder="project" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Filter</button>
+        <a asp-page="/Tasks/Index" class="btn btn-outline-secondary ms-1">Clear</a>
+    </div>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.Tag))
+{
+    <p class="text-muted">Active filter: <strong>@Model.Tag</strong></p>
+}
+
 @if (!Model.Tasks.Any())
 {
     <div class="alert alert-info" role="alert">
@@ -40,6 +56,7 @@ else
                 <td>
                     <form method="post" asp-page-handler="ToggleDone" class="d-inline">
                         <input type="hidden" name="id" value="@task.Id" />
+                        <input type="hidden" name="tag" value="@Model.Tag" />
                         <button type="submit" class="btn btn-sm @(task.IsDone ? "btn-outline-warning" : "btn-outline-success")">
                             @(task.IsDone ? "Undo" : "Done")
                         </button>
