@@ -1,3 +1,11 @@
+:root {
+  --app-primary: #4f46e5;
+  --app-primary-dark: #3730a3;
+  --app-surface: #ffffff;
+  --app-muted: #64748b;
+  --app-border: #e2e8f0;
+}
+
 html {
   font-size: 14px;
 }
@@ -8,24 +16,146 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+body.app-body {
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  color: #0f172a;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.app-navbar {
+  background: linear-gradient(90deg, #1e1b4b 0%, #312e81 55%, #4338ca 100%);
 }
 
-body {
-  margin-bottom: 60px;
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link:focus {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.app-main {
+  background-color: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px -32px rgba(15, 23, 42, 0.65);
+  padding: 1.5rem;
+}
+
+.app-alert {
+  border-radius: 12px;
+  border: 1px solid #bbf7d0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f8fafc;
+  border-bottom-width: 1px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.table > :not(caption) > * > * {
+  border-bottom-color: #edf2f7;
+  vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: #fcfdff;
+}
+
+.table tbody tr:hover > * {
+  --bs-table-accent-bg: #f1f5ff;
+}
+
+.form-control,
+.form-select,
+textarea.form-control {
+  border-radius: 10px;
+  border-color: #dbe2ea;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus,
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus {
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.2);
+}
+
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--app-primary-dark);
+  border-color: var(--app-primary-dark);
+}
+
+.btn-outline-primary {
+  color: var(--app-primary);
+  border-color: #c7d2fe;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+.badge.text-bg-light {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+}
+
+.alert {
+  border-radius: 12px;
+}
+
+.footer {
+  border-top: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+.footer a {
+  color: var(--app-primary-dark);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.text-muted {
+  color: var(--app-muted) !important;
 }

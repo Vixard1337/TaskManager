@@ -31,7 +31,10 @@ The project currently includes:
   - `Pages/Tasks/Create` (create task with user assignment and tags)
   - `Pages/Tasks/Edit` (edit task)
   - `Pages/Tasks/Delete` (delete confirmation)
-- Updated navigation in `Pages/Shared/_Layout.cshtml`
+- Modernized app layout and styling:
+  - refreshed `Pages/Shared/_Layout.cshtml`
+  - updated global theme in `wwwroot/css/site.css`
+  - dashboard-style home page in `Pages/Index.cshtml`
 - Added project documentation assets:
   - `docs/PROJECT_STAGES.md`
   - `docs/ARCHITECTURE.md`

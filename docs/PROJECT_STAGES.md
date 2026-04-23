@@ -134,5 +134,18 @@ This document tracks the project progress in chronological order.
 - Added sort selector in `Pages/Tasks/Index.cshtml`
 - Preserved sort selection after `Done/Undo` action
 
+## Stage 17 — UI polish and modernized layout
+- Refreshed global layout in `Pages/Shared/_Layout.cshtml`:
+  - dark gradient navbar
+  - cleaner container spacing
+  - styled global success alert
+  - refined footer
+- Reworked global styling in `wwwroot/css/site.css`:
+  - modern color palette
+  - elevated content surface
+  - improved tables/forms/buttons
+  - updated hover/focus states
+- Updated `Pages/Index.cshtml` to a dashboard-style home page with quick navigation cards
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report
