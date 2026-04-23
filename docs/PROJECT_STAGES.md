@@ -162,5 +162,20 @@ This document tracks the project progress in chronological order.
   - `Delete...` label to emphasize confirmation step
   - inline explanation of `Done/Undo` vs `Delete`
 
+## Stage 20 — Admin capabilities extension
+- Added cookie-based admin authentication and login page:
+  - `Pages/Account/Login.cshtml`
+  - `Pages/Account/Login.cshtml.cs`
+  - protected app pages require authentication
+- Added full user management pages:
+  - `Pages/Users/Edit.cshtml` + `.cshtml.cs`
+  - `Pages/Users/Delete.cshtml` + `.cshtml.cs`
+- Extended task list filtering/sorting behavior:
+  - filter by user
+  - case-insensitive tag matching
+  - additional user-based sorting (`userasc`, `userdesc`)
+- Added internal scroll container for task table (`table-scroll-container`) to avoid full page scrolling
+- Updated app naming as admin-facing panel in layout and tasks/users views
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report

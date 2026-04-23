@@ -22,23 +22,39 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
     [BindProperty(SupportsGet = true)]
     public string Sort { get; set; } = "status";
 
+    [BindProperty(SupportsGet = true)]
+    public string UserId { get; set; } = string.Empty;
+
     public List<TaskItem> Tasks { get; private set; } = [];
 
     public Dictionary<string, string> UserNamesById { get; private set; } = [];
+
+    public List<User> Users { get; private set; } = [];
 
     public async Task OnGetAsync()
     {
         await LoadUsersAsync();
 
-        var tasks = string.IsNullOrWhiteSpace(Tag)
-            ? await taskService.GetAllAsync()
-            : await taskService.GetByTagAsync(Tag.Trim());
+        var tasks = await taskService.GetAllAsync();
+
+        if (!string.IsNullOrWhiteSpace(Tag))
+        {
+            var tagFilter = Tag.Trim();
+            tasks = tasks
+                .Where(x => x.Tags.Any(t => t.Contains(tagFilter, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+        }
 
         if (!string.IsNullOrWhiteSpace(Title))
         {
             tasks = tasks
                 .Where(x => x.Title.Contains(Title.Trim(), StringComparison.OrdinalIgnoreCase))
                 .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(UserId))
+        {
+            tasks = tasks.Where(x => string.Equals(x.UserId, UserId, StringComparison.Ordinal)).ToList();
         }
 
         Status = NormalizeStatus(Status);
@@ -54,6 +70,8 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         {
             "titleasc" => tasks.OrderBy(x => x.Title).ToList(),
             "titledesc" => tasks.OrderByDescending(x => x.Title).ToList(),
+            "userasc" => tasks.OrderBy(x => GetUserDisplayName(x.UserId)).ThenBy(x => x.Title).ToList(),
+            "userdesc" => tasks.OrderByDescending(x => GetUserDisplayName(x.UserId)).ThenBy(x => x.Title).ToList(),
             _ => tasks
                 .OrderBy(x => x.IsDone)
                 .ThenBy(x => x.Title)
@@ -63,7 +81,7 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         Tasks = tasks;
     }
 
-    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title, string? sort)
+    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title, string? sort, string? userId)
     {
         var task = await taskService.GetByIdAsync(id);
         if (task is null)
@@ -91,6 +109,11 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         if (!string.IsNullOrWhiteSpace(title))
         {
             routeValues["title"] = title.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(userId))
+        {
+            routeValues["userId"] = userId.Trim();
         }
 
         var normalizedSort = NormalizeSort(sort);
@@ -122,6 +145,7 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
     private async Task LoadUsersAsync()
     {
         var users = await userService.GetAllAsync();
+        Users = users.OrderBy(x => x.Name).ThenBy(x => x.Surname).ToList();
         UserNamesById = users
             .Where(x => !string.IsNullOrWhiteSpace(x.Id))
             .ToDictionary(
@@ -148,7 +172,7 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         }
 
         var normalized = sort.Trim().ToLowerInvariant();
-        return normalized is "status" or "titleasc" or "titledesc"
+        return normalized is "status" or "titleasc" or "titledesc" or "userasc" or "userdesc"
             ? normalized
             : "status";
     }

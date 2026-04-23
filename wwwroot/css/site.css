@@ -68,6 +68,19 @@ h3 {
   overflow: hidden;
 }
 
+.table-scroll-container {
+  max-height: 62vh;
+  overflow: auto;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+}
+
+.table-scroll-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
 .table thead th {
   background-color: #f8fafc;
   border-bottom-width: 1px;

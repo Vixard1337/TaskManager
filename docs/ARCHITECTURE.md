@@ -57,6 +57,12 @@ Examples:
 - `Models/User.cs`
 - `Models/TaskItem.cs`
 
+### 6. Authentication + authorization (admin panel)
+- Cookie authentication is configured in `Program.cs`
+- Global authorization is applied to Razor Pages folder
+- Anonymous access is allowed only for login and error pages
+- Login handler issues authenticated admin identity (claims principal)
+
 ## Current flow
 1. Request hits Razor Page endpoint
 2. `PageModel` uses injected service
@@ -95,10 +101,16 @@ Examples:
 ## Read flow example (extended filtering + sorting)
 1. User submits GET query options on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`, `Sort`)
 2. `IndexModel` loads base data set (all tasks or by tag)
-3. Additional in-memory filters are applied (`Title`, `Status`)
-4. Sorting is applied (`status`, `titleasc`, `titledesc`)
+3. Additional in-memory filters are applied (`Title`, `Status`, `UserId`, case-insensitive tag match)
+4. Sorting is applied (`status`, `titleasc`, `titledesc`, `userasc`, `userdesc`)
 5. User display names are resolved through `UserService` lookup
 6. Filtered/sorted list is rendered in the same index view
+
+## Admin user management flow
+1. Admin opens `Pages/Users/Index`
+2. Admin can create, edit, or delete users via dedicated pages
+3. User changes are persisted through `UserService`
+4. Success feedback is displayed after redirect (TempData)
 
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup
@@ -120,3 +132,4 @@ Examples:
 - Custom application theme is centralized in `wwwroot/css/site.css`
 - Feature pages keep semantic Bootstrap markup and reuse global theme styles
 - Layout-scoped styles in `Pages/Shared/_Layout.cshtml.css` are kept minimal to avoid conflicts with global theme behavior
+- Task list uses an internal scroll container (`table-scroll-container`) with sticky headers for large datasets

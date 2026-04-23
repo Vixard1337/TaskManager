@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TaskManager</title>
+    <title>@ViewData["Title"] - TaskManager Admin Panel</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-navbar shadow-sm">
             <div class="container py-1">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">TaskManager</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">TaskManager Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,6 +33,13 @@
                             <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <form method="post" asp-page="/Account/Login" asp-page-handler="Logout" class="d-flex align-items-center gap-2 ms-2">
+                            <span class="text-white-50 small d-none d-md-inline">@User.Identity.Name</span>
+                            <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+                        </form>
+                    }
                 </div>
             </div>
         </nav>

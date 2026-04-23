@@ -26,8 +26,10 @@ The project currently includes:
 - Added Razor Pages for users:
   - `Pages/Users/Index` (list users)
   - `Pages/Users/Create` (create user)
+  - `Pages/Users/Edit` (edit user)
+  - `Pages/Users/Delete` (delete confirmation)
 - Added Razor Page for tasks:
-  - `Pages/Tasks/Index` (list + filter by tag/title/status + sorting + Done/Undo)
+  - `Pages/Tasks/Index` (admin list + filter by tag/title/status/user + sorting + Done/Undo)
   - `Pages/Tasks/Create` (create task with user assignment and tags)
   - `Pages/Tasks/Edit` (edit task)
   - `Pages/Tasks/Delete` (delete confirmation)
@@ -35,6 +37,10 @@ The project currently includes:
   - refreshed `Pages/Shared/_Layout.cshtml`
   - updated global theme in `wwwroot/css/site.css`
   - dashboard-style home page in `Pages/Index.cshtml`
+  - scrollable task table container for large datasets
+- Added simple admin authentication (cookie login):
+  - `Pages/Account/Login`
+  - protected pages require authentication
 - Added project documentation assets:
   - `docs/PROJECT_STAGES.md`
   - `docs/ARCHITECTURE.md`
@@ -52,7 +58,15 @@ The project currently includes:
 
 `dotnet run`
 
-4. Open the app in browser and use:
+4. Open the app and sign in:
+
+`/Account/Login`
+
+Default credentials from `appsettings.json`:
+- Username: `admin`
+- Password: `admin123`
+
+5. Use admin pages:
    - `/Users/Index`
    - `/Tasks/Index`
 
