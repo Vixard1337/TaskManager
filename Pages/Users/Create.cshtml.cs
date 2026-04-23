@@ -7,6 +7,9 @@ namespace TaskManager.Pages.Users;
 
 public class CreateModel(UserService userService) : PageModel
 {
+    [TempData]
+    public string? SuccessMessage { get; set; }
+
     [BindProperty]
     public User User { get; set; } = new();
 
@@ -22,6 +25,7 @@ public class CreateModel(UserService userService) : PageModel
         }
 
         await userService.CreateAsync(User);
+        SuccessMessage = "User created successfully.";
         return RedirectToPage("/Users/Index");
     }
 }

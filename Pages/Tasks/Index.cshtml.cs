@@ -7,6 +7,9 @@ namespace TaskManager.Pages.Tasks;
 
 public class IndexModel(TaskService taskService, UserService userService) : PageModel
 {
+    [TempData]
+    public string? SuccessMessage { get; set; }
+
     [BindProperty(SupportsGet = true)]
     public string Tag { get; set; } = string.Empty;
 
@@ -54,7 +57,9 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
             return NotFound();
         }
 
-        await taskService.SetDoneAsync(id, !task.IsDone);
+        var newDoneState = !task.IsDone;
+        await taskService.SetDoneAsync(id, newDoneState);
+        SuccessMessage = newDoneState ? "Task marked as done." : "Task marked as not done.";
 
         var routeValues = new Dictionary<string, string>();
 

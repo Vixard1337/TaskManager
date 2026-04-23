@@ -83,7 +83,14 @@ Examples:
 1. User clicks `Done` or `Undo` on `Pages/Tasks/Index`
 2. `IndexModel.OnPostToggleDoneAsync(string id)` loads task by `id`
 3. `TaskService.SetDoneAsync(...)` updates `IsDone` in MongoDB
-4. Request is redirected to refreshed `Pages/Tasks/Index`
+4. `TempData` success message is set in page model
+5. Request is redirected to refreshed `Pages/Tasks/Index`
+
+## UX feedback flow example (Post/Redirect/Get)
+1. Action handler (`Create`, `Edit`, `Delete`, `Done/Undo`) sets `[TempData] SuccessMessage`
+2. Handler redirects to target page
+3. `Pages/Shared/_Layout.cshtml` reads `TempData["SuccessMessage"]`
+4. Bootstrap success alert is displayed once after redirect
 
 ## Read flow example (extended filtering)
 1. User submits GET filters on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`)

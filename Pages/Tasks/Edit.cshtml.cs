@@ -7,6 +7,9 @@ namespace TaskManager.Pages.Tasks;
 
 public class EditModel(TaskService taskService, UserService userService) : PageModel
 {
+    [TempData]
+    public string? SuccessMessage { get; set; }
+
     [BindProperty]
     public TaskItem TaskItem { get; set; } = new();
 
@@ -46,6 +49,8 @@ public class EditModel(TaskService taskService, UserService userService) : PageM
 
         TaskItem.Tags = ParseTags(TagsInput);
         await taskService.UpdateAsync(TaskItem.Id, TaskItem);
+
+        SuccessMessage = "Task updated successfully.";
 
         return RedirectToPage("/Tasks/Index");
     }

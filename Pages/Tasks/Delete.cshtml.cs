@@ -7,6 +7,9 @@ namespace TaskManager.Pages.Tasks;
 
 public class DeleteModel(TaskService taskService) : PageModel
 {
+    [TempData]
+    public string? SuccessMessage { get; set; }
+
     [BindProperty]
     public TaskItem? TaskItem { get; set; }
 
@@ -29,6 +32,7 @@ public class DeleteModel(TaskService taskService) : PageModel
         }
 
         await taskService.DeleteAsync(TaskItem.Id);
+        SuccessMessage = "Task deleted successfully.";
         return RedirectToPage("/Tasks/Index");
     }
 }

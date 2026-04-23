@@ -115,7 +115,16 @@ This document tracks the project progress in chronological order.
   - active filter badges
 - Preserved all active filters after `Done/Undo`
 
+## Stage 15 — Success feedback after actions
+- Added success alert rendering in `Pages/Shared/_Layout.cshtml` based on `TempData["SuccessMessage"]`
+- Added `[TempData] SuccessMessage` to action page models:
+  - `Pages/Users/Create.cshtml.cs`
+  - `Pages/Tasks/Create.cshtml.cs`
+  - `Pages/Tasks/Edit.cshtml.cs`
+  - `Pages/Tasks/Delete.cshtml.cs`
+  - `Pages/Tasks/Index.cshtml.cs` (`Done/Undo`)
+- Added success messages after create/edit/delete/toggle actions
+
 ## Next planned stages
-1. Improve UX with success feedback after actions (`TempData` + alert)
-2. Add sorting on tasks list (e.g., not done first, then done)
-3. Final pre-submission step: capture screenshots and export diagrams as images for the report
+1. Add sorting on tasks list (e.g., not done first, then done)
+2. Final pre-submission step: capture screenshots and export diagrams as images for the report

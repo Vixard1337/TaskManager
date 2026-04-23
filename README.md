@@ -65,8 +65,7 @@ Default local connection:
 
 ## Next steps
 
-1. Add success feedback after actions (`TempData` + alert)
-2. Add sorting on tasks list
-3. Capture screenshots from implemented pages
-4. Export class and use case diagrams for report
-5. Final report assembly (sections 1–8)
+1. Add sorting on tasks list
+2. Capture screenshots from implemented pages
+3. Export class and use case diagrams for report
+4. Final report assembly (sections 1–8)

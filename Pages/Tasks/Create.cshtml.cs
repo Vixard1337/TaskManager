@@ -7,6 +7,9 @@ namespace TaskManager.Pages.Tasks;
 
 public class CreateModel(TaskService taskService, UserService userService) : PageModel
 {
+    [TempData]
+    public string? SuccessMessage { get; set; }
+
     [BindProperty]
     public TaskItem TaskItem { get; set; } = new();
 
@@ -31,6 +34,8 @@ public class CreateModel(TaskService taskService, UserService userService) : Pag
 
         TaskItem.Tags = ParseTags(TagsInput);
         await taskService.CreateAsync(TaskItem);
+
+        SuccessMessage = "Task created successfully.";
 
         return RedirectToPage("/Tasks/Index");
     }
