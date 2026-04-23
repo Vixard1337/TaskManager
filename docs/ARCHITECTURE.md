@@ -109,6 +109,12 @@ Examples:
 - `docs/DIAGRAMS.md` — draft class and use case diagrams (Mermaid)
 - `docs/SCREENSHOTS.md` — checklist and naming convention for report screenshots
 
+## Local infrastructure
+- `docker-compose.yml` provides local MongoDB runtime (`mongo:7`)
+- MongoDB service is exposed on `localhost:27017`
+- Persistent data is stored in Docker volume `mongo_data`
+- `MongoDB Compass` can connect with `mongodb://localhost:27017`
+
 ## UI theming notes
 - Shared visual shell is defined in `Pages/Shared/_Layout.cshtml`
 - Custom application theme is centralized in `wwwroot/css/site.css`

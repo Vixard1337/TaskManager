@@ -147,5 +147,12 @@ This document tracks the project progress in chronological order.
   - updated hover/focus states
 - Updated `Pages/Index.cshtml` to a dashboard-style home page with quick navigation cards
 
+## Stage 18 — Docker Compose for MongoDB
+- Added `docker-compose.yml` with local MongoDB service (`mongo:7`)
+- Added persistent volume (`mongo_data`) for database storage
+- Updated `README.md` with:
+  - Docker Compose startup/shutdown commands
+  - MongoDB Compass connection guide
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report

@@ -43,7 +43,10 @@ The project currently includes:
 
 ## How to run
 
-1. Start MongoDB locally (default: `mongodb://localhost:27017`).
+1. Start MongoDB (recommended via Docker Compose):
+
+`docker compose up -d`
+
 2. Verify MongoDB settings in `appsettings.json`.
 3. Run the application:
 
@@ -52,6 +55,22 @@ The project currently includes:
 4. Open the app in browser and use:
    - `/Users/Index`
    - `/Tasks/Index`
+
+5. Optional: stop MongoDB container when finished:
+
+`docker compose down`
+
+## MongoDB Compass (connection)
+
+1. Open `MongoDB Compass`.
+2. Use connection string:
+
+`mongodb://localhost:27017`
+
+3. Click `Connect`.
+4. Open database `TaskManagerDb` and collections:
+   - `Users`
+   - `Tasks`
 
 ## MongoDB configuration
 
