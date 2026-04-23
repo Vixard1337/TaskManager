@@ -90,5 +90,32 @@ This document tracks the project progress in chronological order.
   - screenshot checklist for report section 5
   - naming convention for exported images
 
+## Stage 12 — User display names on tasks list
+- Updated `Pages/Tasks/Index.cshtml.cs` to load users via `UserService`
+- Added user name lookup and display helper (`GetUserDisplayName(...)`)
+- Replaced technical `UserId` column with readable full name on `Pages/Tasks/Index.cshtml`
+
+## Stage 13 — DataAnnotations-based model validation
+- Added validation attributes in models:
+  - `Models/User.cs` (`[Required]`, `[StringLength]`)
+  - `Models/TaskItem.cs` (`[Required]`, `[StringLength]`)
+- Simplified validation in page models by relying on `ModelState`:
+  - `Pages/Users/Create.cshtml.cs`
+  - `Pages/Tasks/Create.cshtml.cs`
+  - `Pages/Tasks/Edit.cshtml.cs`
+
+## Stage 14 — Extended filtering on tasks list
+- Extended `Pages/Tasks/Index.cshtml.cs` with additional GET filters:
+  - `Status` (`all` / `done` / `notdone`)
+  - `Title` search
+- Updated filter UI on `Pages/Tasks/Index.cshtml`:
+  - tag filter
+  - title search
+  - status selector
+  - active filter badges
+- Preserved all active filters after `Done/Undo`
+
 ## Next planned stages
-1. Capture screenshots and export diagrams as images for final report
+1. Improve UX with success feedback after actions (`TempData` + alert)
+2. Add sorting on tasks list (e.g., not done first, then done)
+3. Final pre-submission step: capture screenshots and export diagrams as images for the report

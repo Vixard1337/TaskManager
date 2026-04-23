@@ -5,25 +5,48 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TaskManager.Pages.Tasks;
 
-public class IndexModel(TaskService taskService) : PageModel
+public class IndexModel(TaskService taskService, UserService userService) : PageModel
 {
     [BindProperty(SupportsGet = true)]
     public string Tag { get; set; } = string.Empty;
 
+    [BindProperty(SupportsGet = true)]
+    public string Status { get; set; } = "all";
+
+    [BindProperty(SupportsGet = true)]
+    public string Title { get; set; } = string.Empty;
+
     public List<TaskItem> Tasks { get; private set; } = [];
+
+    public Dictionary<string, string> UserNamesById { get; private set; } = [];
 
     public async Task OnGetAsync()
     {
-        if (string.IsNullOrWhiteSpace(Tag))
+        await LoadUsersAsync();
+
+        var tasks = string.IsNullOrWhiteSpace(Tag)
+            ? await taskService.GetAllAsync()
+            : await taskService.GetByTagAsync(Tag.Trim());
+
+        if (!string.IsNullOrWhiteSpace(Title))
         {
-            Tasks = await taskService.GetAllAsync();
-            return;
+            tasks = tasks
+                .Where(x => x.Title.Contains(Title.Trim(), StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
-        Tasks = await taskService.GetByTagAsync(Tag.Trim());
+        Status = NormalizeStatus(Status);
+        tasks = Status switch
+        {
+            "done" => tasks.Where(x => x.IsDone).ToList(),
+            "notdone" => tasks.Where(x => !x.IsDone).ToList(),
+            _ => tasks
+        };
+
+        Tasks = tasks;
     }
 
-    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag)
+    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title)
     {
         var task = await taskService.GetByIdAsync(id);
         if (task is null)
@@ -32,11 +55,63 @@ public class IndexModel(TaskService taskService) : PageModel
         }
 
         await taskService.SetDoneAsync(id, !task.IsDone);
-        if (string.IsNullOrWhiteSpace(tag))
+
+        var routeValues = new Dictionary<string, string>();
+
+        if (!string.IsNullOrWhiteSpace(tag))
+        {
+            routeValues["tag"] = tag.Trim();
+        }
+
+        var normalizedStatus = NormalizeStatus(status);
+        if (normalizedStatus != "all")
+        {
+            routeValues["status"] = normalizedStatus;
+        }
+
+        if (!string.IsNullOrWhiteSpace(title))
+        {
+            routeValues["title"] = title.Trim();
+        }
+
+        if (routeValues.Count == 0)
         {
             return RedirectToPage("/Tasks/Index");
         }
 
-        return RedirectToPage("/Tasks/Index", new { tag = tag.Trim() });
+        return RedirectToPage("/Tasks/Index", routeValues);
+    }
+
+    public string GetUserDisplayName(string? userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return "Unassigned";
+        }
+
+        return UserNamesById.TryGetValue(userId, out var displayName)
+            ? displayName
+            : userId;
+    }
+
+    private async Task LoadUsersAsync()
+    {
+        var users = await userService.GetAllAsync();
+        UserNamesById = users
+            .Where(x => !string.IsNullOrWhiteSpace(x.Id))
+            .ToDictionary(
+                x => x.Id!,
+                x => $"{x.Name} {x.Surname}".Trim());
+    }
+
+    private static string NormalizeStatus(string? status)
+    {
+        if (string.IsNullOrWhiteSpace(status))
+        {
+            return "all";
+        }
+
+        var normalized = status.Trim().ToLowerInvariant();
+        return normalized is "done" or "notdone" ? normalized : "all";
     }
 }

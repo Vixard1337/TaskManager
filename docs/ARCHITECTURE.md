@@ -50,6 +50,13 @@ Examples:
 - `Pages/Tasks/Delete.cshtml` + `Pages/Tasks/Delete.cshtml.cs`
 - `Pages/Users/Create.cshtml` + `Pages/Users/Create.cshtml.cs`
 
+### 5. DataAnnotations validation
+Input constraints are declared in model classes and evaluated through `ModelState` in page handlers.
+
+Examples:
+- `Models/User.cs`
+- `Models/TaskItem.cs`
+
 ## Current flow
 1. Request hits Razor Page endpoint
 2. `PageModel` uses injected service
@@ -78,11 +85,11 @@ Examples:
 3. `TaskService.SetDoneAsync(...)` updates `IsDone` in MongoDB
 4. Request is redirected to refreshed `Pages/Tasks/Index`
 
-## Read flow example (tag filtering)
-1. User enters a tag on `Pages/Tasks/Index` and submits GET filter form
-2. `IndexModel` receives filter through `Tag` (`SupportsGet = true`)
-3. If filter is empty, `TaskService.GetAllAsync()` is used
-4. If filter is provided, `TaskService.GetByTagAsync(...)` is used
+## Read flow example (extended filtering)
+1. User submits GET filters on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`)
+2. `IndexModel` loads base data set (all tasks or by tag)
+3. Additional in-memory filters are applied (`Title`, `Status`)
+4. User display names are resolved through `UserService` lookup
 5. Filtered list is rendered in the same index view
 
 ## Notes for future development

@@ -27,7 +27,7 @@ The project currently includes:
   - `Pages/Users/Index` (list users)
   - `Pages/Users/Create` (create user)
 - Added Razor Page for tasks:
-  - `Pages/Tasks/Index` (list + filter by tag + Done/Undo)
+  - `Pages/Tasks/Index` (list + filter by tag/title/status + Done/Undo)
   - `Pages/Tasks/Create` (create task with user assignment and tags)
   - `Pages/Tasks/Edit` (edit task)
   - `Pages/Tasks/Delete` (delete confirmation)
@@ -65,6 +65,8 @@ Default local connection:
 
 ## Next steps
 
-1. Capture screenshots from implemented pages
-2. Export class and use case diagrams for report
-3. Final report assembly (sections 1–8)
+1. Add success feedback after actions (`TempData` + alert)
+2. Add sorting on tasks list
+3. Capture screenshots from implemented pages
+4. Export class and use case diagrams for report
+5. Final report assembly (sections 1–8)

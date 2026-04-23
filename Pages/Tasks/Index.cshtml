@@ -14,15 +14,41 @@
         <label asp-for="Tag" class="form-label">Filter by tag</label>
         <input asp-for="Tag" class="form-control" placeholder="project" />
     </div>
+    <div class="col-sm-6 col-md-4">
+        <label asp-for="Title" class="form-label">Search by title</label>
+        <input asp-for="Title" class="form-control" placeholder="task title" />
+    </div>
+    <div class="col-sm-6 col-md-3">
+        <label asp-for="Status" class="form-label">Status</label>
+        <select asp-for="Status" class="form-select">
+            <option value="all">All</option>
+            <option value="done">Done</option>
+            <option value="notdone">Not done</option>
+        </select>
+    </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-outline-primary">Filter</button>
         <a asp-page="/Tasks/Index" class="btn btn-outline-secondary ms-1">Clear</a>
     </div>
 </form>
 
-@if (!string.IsNullOrWhiteSpace(Model.Tag))
+@if (!string.IsNullOrWhiteSpace(Model.Tag) || !string.IsNullOrWhiteSpace(Model.Title) || Model.Status != "all")
 {
-    <p class="text-muted">Active filter: <strong>@Model.Tag</strong></p>
+    <p class="text-muted mb-2">
+        Active filters:
+        @if (!string.IsNullOrWhiteSpace(Model.Tag))
+        {
+            <span class="badge text-bg-light border me-1">Tag: @Model.Tag</span>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Title))
+        {
+            <span class="badge text-bg-light border me-1">Title: @Model.Title</span>
+        }
+        @if (Model.Status != "all")
+        {
+            <span class="badge text-bg-light border">Status: @Model.Status</span>
+        }
+    </p>
 }
 
 @if (!Model.Tasks.Any())
@@ -40,7 +66,7 @@ else
                 <th>Description</th>
                 <th>Tags</th>
                 <th>Done</th>
-                <th>UserId</th>
+                <th>User</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -52,11 +78,13 @@ else
                 <td>@task.Description</td>
                 <td>@string.Join(", ", task.Tags)</td>
                 <td>@(task.IsDone ? "Yes" : "No")</td>
-                <td>@task.UserId</td>
+                <td>@Model.GetUserDisplayName(task.UserId)</td>
                 <td>
                     <form method="post" asp-page-handler="ToggleDone" class="d-inline">
                         <input type="hidden" name="id" value="@task.Id" />
                         <input type="hidden" name="tag" value="@Model.Tag" />
+                        <input type="hidden" name="status" value="@Model.Status" />
+                        <input type="hidden" name="title" value="@Model.Title" />
                         <button type="submit" class="btn btn-sm @(task.IsDone ? "btn-outline-warning" : "btn-outline-success")">
                             @(task.IsDone ? "Undo" : "Done")
                         </button>

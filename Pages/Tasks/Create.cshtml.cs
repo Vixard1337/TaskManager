@@ -24,16 +24,6 @@ public class CreateModel(TaskService taskService, UserService userService) : Pag
     {
         await LoadUsersAsync();
 
-        if (string.IsNullOrWhiteSpace(TaskItem.Title))
-        {
-            ModelState.AddModelError($"{nameof(TaskItem)}.{nameof(TaskItem.Title)}", "Title is required.");
-        }
-
-        if (string.IsNullOrWhiteSpace(TaskItem.UserId))
-        {
-            ModelState.AddModelError($"{nameof(TaskItem)}.{nameof(TaskItem.UserId)}", "User is required.");
-        }
-
         if (!ModelState.IsValid)
         {
             return Page();
