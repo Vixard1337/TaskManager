@@ -119,3 +119,4 @@ Examples:
 - Shared visual shell is defined in `Pages/Shared/_Layout.cshtml`
 - Custom application theme is centralized in `wwwroot/css/site.css`
 - Feature pages keep semantic Bootstrap markup and reuse global theme styles
+- Layout-scoped styles in `Pages/Shared/_Layout.cshtml.css` are kept minimal to avoid conflicts with global theme behavior

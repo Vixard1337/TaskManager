@@ -63,6 +63,10 @@
     </p>
 }
 
+<p class="text-muted small mb-3">
+    <strong>Done/Undo</strong> changes only task status. <strong>Delete</strong> opens a confirmation page before removing data.
+</p>
+
 @if (!Model.Tasks.Any())
 {
     <div class="alert alert-info" role="alert">
@@ -91,8 +95,8 @@ else
                 <td>@string.Join(", ", task.Tags)</td>
                 <td>@(task.IsDone ? "Yes" : "No")</td>
                 <td>@Model.GetUserDisplayName(task.UserId)</td>
-                <td>
-                    <form method="post" asp-page-handler="ToggleDone" class="d-inline">
+                <td class="text-nowrap">
+                    <form method="post" asp-page-handler="ToggleDone" class="d-inline me-1">
                         <input type="hidden" name="id" value="@task.Id" />
                         <input type="hidden" name="tag" value="@Model.Tag" />
                         <input type="hidden" name="status" value="@Model.Status" />
@@ -102,8 +106,8 @@ else
                             @(task.IsDone ? "Undo" : "Done")
                         </button>
                     </form>
-                    <a asp-page="/Tasks/Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a asp-page="/Tasks/Delete" asp-route-id="@task.Id" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
+                    <a asp-page="/Tasks/Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                    <a asp-page="/Tasks/Delete" asp-route-id="@task.Id" class="btn btn-sm btn-outline-danger">Delete...</a>
                 </td>
             </tr>
         }

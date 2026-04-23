@@ -154,5 +154,13 @@ This document tracks the project progress in chronological order.
   - Docker Compose startup/shutdown commands
   - MongoDB Compass connection guide
 
+## Stage 19 — Layout overlap fix and action clarity
+- Removed old scaffolded styles from `Pages/Shared/_Layout.cshtml.css` that were overriding the modern theme
+- Eliminated absolute footer behavior causing content/footer overlap
+- Improved task action readability in `Pages/Tasks/Index.cshtml`:
+  - clearer spacing for action buttons
+  - `Delete...` label to emphasize confirmation step
+  - inline explanation of `Done/Undo` vs `Delete`
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report
