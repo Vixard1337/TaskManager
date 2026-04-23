@@ -26,13 +26,21 @@
             <option value="notdone">Not done</option>
         </select>
     </div>
+    <div class="col-sm-6 col-md-3">
+        <label asp-for="Sort" class="form-label">Sort</label>
+        <select asp-for="Sort" class="form-select">
+            <option value="status">Not done first</option>
+            <option value="titleasc">Title A-Z</option>
+            <option value="titledesc">Title Z-A</option>
+        </select>
+    </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-outline-primary">Filter</button>
         <a asp-page="/Tasks/Index" class="btn btn-outline-secondary ms-1">Clear</a>
     </div>
 </form>
 
-@if (!string.IsNullOrWhiteSpace(Model.Tag) || !string.IsNullOrWhiteSpace(Model.Title) || Model.Status != "all")
+@if (!string.IsNullOrWhiteSpace(Model.Tag) || !string.IsNullOrWhiteSpace(Model.Title) || Model.Status != "all" || Model.Sort != "status")
 {
     <p class="text-muted mb-2">
         Active filters:
@@ -47,6 +55,10 @@
         @if (Model.Status != "all")
         {
             <span class="badge text-bg-light border">Status: @Model.Status</span>
+        }
+        @if (Model.Sort != "status")
+        {
+            <span class="badge text-bg-light border ms-1">Sort: @Model.Sort</span>
         }
     </p>
 }
@@ -85,6 +97,7 @@ else
                         <input type="hidden" name="tag" value="@Model.Tag" />
                         <input type="hidden" name="status" value="@Model.Status" />
                         <input type="hidden" name="title" value="@Model.Title" />
+                        <input type="hidden" name="sort" value="@Model.Sort" />
                         <button type="submit" class="btn btn-sm @(task.IsDone ? "btn-outline-warning" : "btn-outline-success")">
                             @(task.IsDone ? "Undo" : "Done")
                         </button>

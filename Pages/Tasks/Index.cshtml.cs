@@ -19,6 +19,9 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
     [BindProperty(SupportsGet = true)]
     public string Title { get; set; } = string.Empty;
 
+    [BindProperty(SupportsGet = true)]
+    public string Sort { get; set; } = "status";
+
     public List<TaskItem> Tasks { get; private set; } = [];
 
     public Dictionary<string, string> UserNamesById { get; private set; } = [];
@@ -46,10 +49,21 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
             _ => tasks
         };
 
+        Sort = NormalizeSort(Sort);
+        tasks = Sort switch
+        {
+            "titleasc" => tasks.OrderBy(x => x.Title).ToList(),
+            "titledesc" => tasks.OrderByDescending(x => x.Title).ToList(),
+            _ => tasks
+                .OrderBy(x => x.IsDone)
+                .ThenBy(x => x.Title)
+                .ToList()
+        };
+
         Tasks = tasks;
     }
 
-    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title)
+    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title, string? sort)
     {
         var task = await taskService.GetByIdAsync(id);
         if (task is null)
@@ -77,6 +91,12 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         if (!string.IsNullOrWhiteSpace(title))
         {
             routeValues["title"] = title.Trim();
+        }
+
+        var normalizedSort = NormalizeSort(sort);
+        if (normalizedSort != "status")
+        {
+            routeValues["sort"] = normalizedSort;
         }
 
         if (routeValues.Count == 0)
@@ -118,5 +138,18 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
 
         var normalized = status.Trim().ToLowerInvariant();
         return normalized is "done" or "notdone" ? normalized : "all";
+    }
+
+    private static string NormalizeSort(string? sort)
+    {
+        if (string.IsNullOrWhiteSpace(sort))
+        {
+            return "status";
+        }
+
+        var normalized = sort.Trim().ToLowerInvariant();
+        return normalized is "status" or "titleasc" or "titledesc"
+            ? normalized
+            : "status";
     }
 }

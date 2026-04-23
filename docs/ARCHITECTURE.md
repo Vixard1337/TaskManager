@@ -92,12 +92,13 @@ Examples:
 3. `Pages/Shared/_Layout.cshtml` reads `TempData["SuccessMessage"]`
 4. Bootstrap success alert is displayed once after redirect
 
-## Read flow example (extended filtering)
-1. User submits GET filters on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`)
+## Read flow example (extended filtering + sorting)
+1. User submits GET query options on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`, `Sort`)
 2. `IndexModel` loads base data set (all tasks or by tag)
 3. Additional in-memory filters are applied (`Title`, `Status`)
-4. User display names are resolved through `UserService` lookup
-5. Filtered list is rendered in the same index view
+4. Sorting is applied (`status`, `titleasc`, `titledesc`)
+5. User display names are resolved through `UserService` lookup
+6. Filtered/sorted list is rendered in the same index view
 
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup

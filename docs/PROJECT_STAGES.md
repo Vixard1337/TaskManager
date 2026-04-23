@@ -125,6 +125,14 @@ This document tracks the project progress in chronological order.
   - `Pages/Tasks/Index.cshtml.cs` (`Done/Undo`)
 - Added success messages after create/edit/delete/toggle actions
 
+## Stage 16 — Sorting on tasks list
+- Extended `Pages/Tasks/Index.cshtml.cs` with GET sort support (`Sort`)
+- Added sorting logic:
+  - `status` (default: not done first, then title)
+  - `titleasc`
+  - `titledesc`
+- Added sort selector in `Pages/Tasks/Index.cshtml`
+- Preserved sort selection after `Done/Undo` action
+
 ## Next planned stages
-1. Add sorting on tasks list (e.g., not done first, then done)
-2. Final pre-submission step: capture screenshots and export diagrams as images for the report
+1. Final pre-submission step: capture screenshots and export diagrams as images for the report
