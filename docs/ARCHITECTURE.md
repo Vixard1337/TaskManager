@@ -62,6 +62,14 @@ Examples:
 - Global authorization is applied to Razor Pages folder
 - Anonymous access is allowed only for login and error pages
 - Login handler issues authenticated admin identity (claims principal)
+- Authentication source is MongoDB collection `AdminUsers` via `AdminAuthService`
+- Password verification uses `ASP.NET Core PasswordHasher`
+- Failed logins are tracked and can trigger temporary account lockout
+
+### 7. Bootstrap seeding pattern
+- Startup seeding ensures one admin account exists on first run
+- Seed data comes from `AdminBootstrap` configuration
+- Runtime authentication does not compare plain text config values
 
 ## Current flow
 1. Request hits Razor Page endpoint
@@ -126,6 +134,7 @@ Examples:
 - MongoDB service is exposed on `localhost:27017`
 - Persistent data is stored in Docker volume `mongo_data`
 - `MongoDB Compass` can connect with `mongodb://localhost:27017`
+- Main collections include: `Users`, `Tasks`, `AdminUsers`
 
 ## UI theming notes
 - Shared visual shell is defined in `Pages/Shared/_Layout.cshtml`

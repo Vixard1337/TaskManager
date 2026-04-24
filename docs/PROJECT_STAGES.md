@@ -177,5 +177,20 @@ This document tracks the project progress in chronological order.
 - Added internal scroll container for task table (`table-scroll-container`) to avoid full page scrolling
 - Updated app naming as admin-facing panel in layout and tasks/users views
 
+## Stage 21 — Hardened admin authentication (Mongo-based)
+- Replaced plain appsettings login validation with MongoDB-backed admin accounts (`AdminUsers` collection)
+- Added `Models/AdminUser.cs` for admin credentials/lockout metadata
+- Added `Services/AdminAuthService.cs` with:
+  - `PasswordHasher`-based credential verification
+  - failed login counter
+  - temporary lockout after multiple failed attempts
+  - role/claims-compatible sign-in result
+- Added bootstrap admin seeding on startup:
+  - `Configuration/AdminBootstrapSettings.cs`
+  - startup seed call in `Program.cs`
+- Migrated configuration:
+  - removed `AdminAuth`
+  - added `AdminBootstrap` and `MongoDb:AdminUsersCollectionName`
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report

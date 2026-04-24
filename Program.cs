@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using TaskManager.Configuration;
 using TaskManager.Services;
@@ -20,7 +21,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/Error");
 });
 builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection(MongoSettings.SectionName));
-builder.Services.Configure<AdminAuthSettings>(builder.Configuration.GetSection(AdminAuthSettings.SectionName));
+builder.Services.Configure<AdminBootstrapSettings>(builder.Configuration.GetSection(AdminBootstrapSettings.SectionName));
 builder.Services.AddSingleton<IMongoClient>(_ =>
 {
     var connectionString = builder.Configuration[$"{MongoSettings.SectionName}:{nameof(MongoSettings.ConnectionString)}"]
@@ -29,6 +30,7 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
 });
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TaskService>();
+builder.Services.AddSingleton<AdminAuthService>();
 
 var app = builder.Build();
 
@@ -50,5 +52,12 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+using (var scope = app.Services.CreateScope())
+{
+    var adminAuthService = scope.ServiceProvider.GetRequiredService<AdminAuthService>();
+    var bootstrap = scope.ServiceProvider.GetRequiredService<IOptions<AdminBootstrapSettings>>().Value;
+    await adminAuthService.EnsureSeedAdminAsync(bootstrap);
+}
 
 app.Run();

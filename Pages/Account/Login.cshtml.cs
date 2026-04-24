@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
-using TaskManager.Configuration;
+using TaskManager.Services;
 
 namespace TaskManager.Pages.Account;
 
-public class LoginModel(IOptions<AdminAuthSettings> authSettings) : PageModel
+public class LoginModel(AdminAuthService adminAuthService) : PageModel
 {
     [BindProperty]
     public string Username { get; set; } = string.Empty;
@@ -33,18 +32,28 @@ public class LoginModel(IOptions<AdminAuthSettings> authSettings) : PageModel
             return Page();
         }
 
-        var settings = authSettings.Value;
-        if (!string.Equals(Username, settings.Username, StringComparison.Ordinal) ||
-            !string.Equals(Password, settings.Password, StringComparison.Ordinal))
+        var signInResult = await adminAuthService.ValidateCredentialsAsync(Username, Password);
+        if (signInResult.IsLockedOut)
+        {
+            var lockoutEnd = signInResult.LockoutEndUtc?.ToLocalTime().ToString("g") ?? "later";
+            ModelState.AddModelError(string.Empty, $"Account is temporarily locked. Try again after {lockoutEnd}.");
+            return Page();
+        }
+
+        if (!signInResult.IsSuccess || signInResult.User is null)
         {
             ModelState.AddModelError(string.Empty, "Invalid credentials.");
             return Page();
         }
 
+        var admin = signInResult.User;
+
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Name, Username),
-            new(ClaimTypes.Role, "Admin")
+            new(ClaimTypes.NameIdentifier, admin.Id ?? string.Empty),
+            new(ClaimTypes.Name, string.IsNullOrWhiteSpace(admin.DisplayName) ? admin.Username : admin.DisplayName),
+            new(ClaimTypes.GivenName, admin.Username),
+            new(ClaimTypes.Role, admin.Role)
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

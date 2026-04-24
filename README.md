@@ -41,6 +41,9 @@ The project currently includes:
 - Added simple admin authentication (cookie login):
   - `Pages/Account/Login`
   - protected pages require authentication
+  - credentials validated against MongoDB collection `AdminUsers`
+  - password hashing via `ASP.NET Core PasswordHasher`
+  - lockout after multiple failed login attempts
 - Added project documentation assets:
   - `docs/PROJECT_STAGES.md`
   - `docs/ARCHITECTURE.md`
@@ -62,9 +65,13 @@ The project currently includes:
 
 `/Account/Login`
 
-Default credentials from `appsettings.json`:
+Bootstrap credentials from `appsettings.json` (used to seed the first admin account):
 - Username: `admin`
 - Password: `admin123`
+
+Config section:
+
+`AdminBootstrap`
 
 5. Use admin pages:
    - `/Users/Index`
@@ -85,6 +92,7 @@ Default credentials from `appsettings.json`:
 4. Open database `TaskManagerDb` and collections:
    - `Users`
    - `Tasks`
+   - `AdminUsers`
 
 ## MongoDB configuration
 

@@ -11,4 +11,6 @@ public class MongoSettings
     public string UsersCollectionName { get; set; } = string.Empty;
 
     public string TasksCollectionName { get; set; } = string.Empty;
+
+    public string AdminUsersCollectionName { get; set; } = string.Empty;
 }
