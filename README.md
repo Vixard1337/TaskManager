@@ -29,7 +29,7 @@ The project currently includes:
   - `Pages/Users/Edit` (edit user)
   - `Pages/Users/Delete` (delete confirmation)
 - Added Razor Page for tasks:
-  - `Pages/Tasks/Index` (admin list + filter by tag/title/status/user + sorting + Done/Undo)
+  - `Pages/Tasks/Index` (admin list + filter by tag mode/title+description/status/user + sorting + Done/Undo)
   - `Pages/Tasks/Create` (create task with user assignment and tags)
   - `Pages/Tasks/Edit` (edit task)
   - `Pages/Tasks/Delete` (delete confirmation)

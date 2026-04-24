@@ -202,5 +202,14 @@ This document tracks the project progress in chronological order.
   - block deleting users assigned to existing tasks
   - show validation message on `Pages/Users/Delete`
 
+## Stage 23 — Search and filter improvements
+- Reworked task filtering to execute in MongoDB query (`TaskService.GetFilteredAsync(...)`) instead of full in-memory filtering
+- Added tag matching modes:
+  - `any` (contains)
+  - `all` (contains for all provided tags)
+  - `exact`
+- Extended search scope from title-only to `title + description`
+- Preserved new `TagMode` across status toggle actions on task list
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report

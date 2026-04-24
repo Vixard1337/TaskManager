@@ -108,12 +108,16 @@ Examples:
 4. Bootstrap success alert is displayed once after redirect
 
 ## Read flow example (extended filtering + sorting)
-1. User submits GET query options on `Pages/Tasks/Index` (`Tag`, `Title`, `Status`, `Sort`)
-2. `IndexModel` loads base data set (all tasks or by tag)
-3. Additional in-memory filters are applied (`Title`, `Status`, `UserId`, case-insensitive tag match)
-4. Sorting is applied (`status`, `titleasc`, `titledesc`, `userasc`, `userdesc`)
+1. User submits GET query options on `Pages/Tasks/Index` (`Tag`, `TagMode`, `Title`, `Status`, `Sort`, `UserId`)
+2. `IndexModel` normalizes input values and calls `TaskService.GetFilteredAsync(...)`
+3. Mongo query applies filters server-side:
+   - tag (`any`/`all`/`exact`)
+   - title + description search
+   - status and assigned user
+4. Base sort is applied in Mongo (`status`, `titleasc`, `titledesc`)
 5. User display names are resolved through `UserService` lookup
-6. Filtered/sorted list is rendered in the same index view
+6. Optional user-name sort (`userasc`, `userdesc`) is applied in page model
+7. Filtered/sorted list is rendered in the same index view
 
 ## Admin user management flow
 1. Admin opens `Pages/Users/Index`

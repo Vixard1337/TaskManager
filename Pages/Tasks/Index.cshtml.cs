@@ -23,6 +23,9 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
     public string Sort { get; set; } = "status";
 
     [BindProperty(SupportsGet = true)]
+    public string TagMode { get; set; } = "any";
+
+    [BindProperty(SupportsGet = true)]
     public string UserId { get; set; } = string.Empty;
 
     public List<TaskItem> Tasks { get; private set; } = [];
@@ -81,7 +84,7 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         Tasks = tasks;
     }
 
-    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title, string? sort, string? userId)
+    public async Task<IActionResult> OnPostToggleDoneAsync(string id, string? tag, string? status, string? title, string? sort, string? userId, string? tagMode)
     {
         var task = await taskService.GetByIdAsync(id);
         if (task is null)
@@ -114,6 +117,12 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         if (!string.IsNullOrWhiteSpace(userId))
         {
             routeValues["userId"] = userId.Trim();
+        }
+
+        var normalizedTagMode = NormalizeTagMode(tagMode);
+        if (normalizedTagMode != "any")
+        {
+            routeValues["tagMode"] = normalizedTagMode;
         }
 
         var normalizedSort = NormalizeSort(sort);
@@ -175,5 +184,18 @@ public class IndexModel(TaskService taskService, UserService userService) : Page
         return normalized is "status" or "titleasc" or "titledesc" or "userasc" or "userdesc"
             ? normalized
             : "status";
+    }
+
+    private static string NormalizeTagMode(string? tagMode)
+    {
+        if (string.IsNullOrWhiteSpace(tagMode))
+        {
+            return "any";
+        }
+
+        var normalized = tagMode.Trim().ToLowerInvariant();
+        return normalized is "any" or "all" or "exact"
+            ? normalized
+            : "any";
     }
 }

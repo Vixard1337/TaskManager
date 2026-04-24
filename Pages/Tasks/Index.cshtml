@@ -14,9 +14,17 @@
         <label asp-for="Tag" class="form-label">Filter by tag</label>
         <input asp-for="Tag" class="form-control" placeholder="project" />
     </div>
+    <div class="col-sm-6 col-md-3">
+        <label asp-for="TagMode" class="form-label">Tag mode</label>
+        <select asp-for="TagMode" class="form-select">
+            <option value="any">Any tag (contains)</option>
+            <option value="all">All tags (contains)</option>
+            <option value="exact">Exact tag</option>
+        </select>
+    </div>
     <div class="col-sm-6 col-md-4">
-        <label asp-for="Title" class="form-label">Search by title</label>
-        <input asp-for="Title" class="form-control" placeholder="task title" />
+        <label asp-for="Title" class="form-label">Search in title/description</label>
+        <input asp-for="Title" class="form-control" placeholder="title or description" />
     </div>
     <div class="col-sm-6 col-md-3">
         <label asp-for="Status" class="form-label">Status</label>
@@ -52,7 +60,7 @@
     </div>
 </form>
 
-@if (!string.IsNullOrWhiteSpace(Model.Tag) || !string.IsNullOrWhiteSpace(Model.Title) || Model.Status != "all" || Model.Sort != "status" || !string.IsNullOrWhiteSpace(Model.UserId))
+@if (!string.IsNullOrWhiteSpace(Model.Tag) || !string.IsNullOrWhiteSpace(Model.Title) || Model.Status != "all" || Model.Sort != "status" || !string.IsNullOrWhiteSpace(Model.UserId) || Model.TagMode != "any")
 {
     <p class="text-muted mb-2">
         Active filters:
@@ -75,6 +83,10 @@
         @if (!string.IsNullOrWhiteSpace(Model.UserId))
         {
             <span class="badge text-bg-light border ms-1">User: @Model.GetUserDisplayName(Model.UserId)</span>
+        }
+        @if (Model.TagMode != "any")
+        {
+            <span class="badge text-bg-light border ms-1">Tag mode: @Model.TagMode</span>
         }
     </p>
 }
@@ -120,6 +132,7 @@ else
                             <input type="hidden" name="title" value="@Model.Title" />
                             <input type="hidden" name="sort" value="@Model.Sort" />
                             <input type="hidden" name="userId" value="@Model.UserId" />
+                            <input type="hidden" name="tagMode" value="@Model.TagMode" />
                             <button type="submit" class="btn btn-sm @(task.IsDone ? "btn-outline-warning" : "btn-outline-success")">
                                 @(task.IsDone ? "Undo" : "Done")
                             </button>
