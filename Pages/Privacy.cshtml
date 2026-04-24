@@ -5,4 +5,42 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p class="text-muted">TaskManager Admin Panel — Educational Project</p>
+
+<h2 class="h5 mt-4">1. Data We Process</h2>
+<p>
+    This application stores administrator account data and task management data in MongoDB.
+    Typical records may include usernames, user names/surnames, task titles, descriptions,
+    tags, and task status metadata.
+</p>
+
+<h2 class="h5 mt-4">2. Purpose of Processing</h2>
+<p>
+    Data is processed only to support the core functionality of the TaskManager admin panel,
+    including authentication, authorization, user management, and task operations.
+</p>
+
+<h2 class="h5 mt-4">3. Authentication and Security</h2>
+<p>
+    The app uses cookie-based authentication for admin access. Admin credentials are stored in
+    MongoDB with password hashing via ASP.NET Core PasswordHasher. The app includes failed login
+    tracking and temporary lockout to reduce brute-force risk.
+</p>
+
+<h2 class="h5 mt-4">4. Data Retention</h2>
+<p>
+    Data is retained for project and demonstration purposes. In a production deployment, retention
+    periods should be defined by organizational and legal requirements.
+</p>
+
+<h2 class="h5 mt-4">5. Third-Party Components</h2>
+<p>
+    This project uses MongoDB and ASP.NET Core components. Review their official privacy and
+    security documentation when deploying beyond local development.
+</p>
+
+<h2 class="h5 mt-4">6. Educational Use Notice</h2>
+<p>
+    This application was built as a university project. The current policy is provided for
+    educational completeness and should be adapted before production use.
+</p>
