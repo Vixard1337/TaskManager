@@ -65,6 +65,7 @@ Examples:
 - Authentication source is MongoDB collection `AdminUsers` via `AdminAuthService`
 - Password verification uses `ASP.NET Core PasswordHasher`
 - Failed logins are tracked and can trigger temporary account lockout
+- Cookie security settings enforce `HttpOnly`, secure policy, and sliding expiration
 
 ### 7. Bootstrap seeding pattern
 - Startup seeding ensures one admin account exists on first run
@@ -118,7 +119,8 @@ Examples:
 1. Admin opens `Pages/Users/Index`
 2. Admin can create, edit, or delete users via dedicated pages
 3. User changes are persisted through `UserService`
-4. Success feedback is displayed after redirect (TempData)
+4. Deletion is blocked when user is assigned to existing tasks
+5. Success feedback is displayed after redirect (TempData)
 
 ## Notes for future development
 - Keep business/data access logic in `Services/`, not in page markup

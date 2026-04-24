@@ -22,6 +22,9 @@ public class AdminAuthService
 
     public async Task EnsureSeedAdminAsync(AdminBootstrapSettings bootstrap)
     {
+        var indexModel = Builders<AdminUser>.IndexKeys.Ascending(x => x.NormalizedUsername);
+        await _admins.Indexes.CreateOneAsync(new CreateIndexModel<AdminUser>(indexModel, new CreateIndexOptions { Unique = true }));
+
         var username = bootstrap.Username.Trim();
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(bootstrap.Password))
         {
@@ -67,6 +70,14 @@ public class AdminAuthService
         {
             await HandleFailedAttemptAsync(admin, now);
             return AdminSignInResult.Invalid();
+        }
+
+        if (verification == PasswordVerificationResult.SuccessRehashNeeded)
+        {
+            var newHash = _passwordHasher.HashPassword(admin, password);
+            await _admins.UpdateOneAsync(x => x.Id == admin.Id,
+                Builders<AdminUser>.Update.Set(x => x.PasswordHash, newHash));
+            admin.PasswordHash = newHash;
         }
 
         var update = Builders<AdminUser>.Update

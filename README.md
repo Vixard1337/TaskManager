@@ -44,11 +44,15 @@ The project currently includes:
   - credentials validated against MongoDB collection `AdminUsers`
   - password hashing via `ASP.NET Core PasswordHasher`
   - lockout after multiple failed login attempts
+  - secure cookie settings and sliding session expiration
+  - auto password rehash and unique admin username index
 - Added project documentation assets:
   - `docs/PROJECT_STAGES.md`
   - `docs/ARCHITECTURE.md`
   - `docs/DIAGRAMS.md`
   - `docs/SCREENSHOTS.md`
+- Added consistency guard:
+  - users assigned to tasks cannot be deleted until tasks are reassigned/removed
 
 ## How to run
 

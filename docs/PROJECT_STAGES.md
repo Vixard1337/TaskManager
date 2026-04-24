@@ -192,5 +192,15 @@ This document tracks the project progress in chronological order.
   - removed `AdminAuth`
   - added `AdminBootstrap` and `MongoDb:AdminUsersCollectionName`
 
+## Stage 22 — Security and consistency hardening
+- Strengthened cookie auth settings in `Program.cs`:
+  - `HttpOnly`, `SameSite`, `SecurePolicy`, sliding expiration
+- Improved admin auth service behavior:
+  - unique index on `AdminUsers.NormalizedUsername`
+  - automatic password rehash when required
+- Added integrity guard in user deletion flow:
+  - block deleting users assigned to existing tasks
+  - show validation message on `Pages/Users/Delete`
+
 ## Next planned stages
 1. Final pre-submission step: capture screenshots and export diagrams as images for the report
