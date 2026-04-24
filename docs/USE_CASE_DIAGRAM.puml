@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam monochrome false
+
+actor "Administrator" as Admin
+
+rectangle "TaskManager Admin Panel" {
+  usecase "Sign in" as UC_Login
+  usecase "Sign out" as UC_Logout
+
+  usecase "Manage users" as UC_Users
+  usecase "Create user" as UC_UserCreate
+  usecase "Edit user" as UC_UserEdit
+  usecase "Delete user" as UC_UserDelete
+
+  usecase "Manage tasks" as UC_Tasks
+  usecase "Create task" as UC_TaskCreate
+  usecase "Edit task" as UC_TaskEdit
+  usecase "Delete task" as UC_TaskDelete
+  usecase "Toggle task status\n(Done/Undo)" as UC_TaskToggle
+
+  usecase "Filter tasks" as UC_Filter
+  usecase "Sort tasks" as UC_Sort
+  usecase "Search by title/description" as UC_Search
+  usecase "Filter by tag mode\n(any/all/exact)" as UC_TagMode
+  usecase "Filter by user/status" as UC_UserStatus
+}
+
+Admin --> UC_Login
+Admin --> UC_Logout
+Admin --> UC_Users
+Admin --> UC_Tasks
+Admin --> UC_Filter
+Admin --> UC_Sort
+Admin --> UC_Search
+
+UC_Users .> UC_UserCreate : <<include>>
+UC_Users .> UC_UserEdit : <<include>>
+UC_Users .> UC_UserDelete : <<include>>
+
+UC_Tasks .> UC_TaskCreate : <<include>>
+UC_Tasks .> UC_TaskEdit : <<include>>
+UC_Tasks .> UC_TaskDelete : <<include>>
+UC_Tasks .> UC_TaskToggle : <<include>>
+
+UC_Filter .> UC_TagMode : <<include>>
+UC_Filter .> UC_UserStatus : <<include>>
+
+@enduml

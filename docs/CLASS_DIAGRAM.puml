@@ -1,0 +1,96 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam monochrome false
+
+package "Models" {
+  class User {
+    +string? Id
+    +string Name
+    +string Surname
+  }
+
+  class TaskItem {
+    +string? Id
+    +string Title
+    +string Description
+    +List<string> Tags
+    +bool IsDone
+    +string UserId
+  }
+
+  class AdminUser {
+    +string? Id
+    +string Username
+    +string NormalizedUsername
+    +string DisplayName
+    +string PasswordHash
+    +string Role
+    +int FailedLoginAttempts
+    +DateTime? LockoutEndUtc
+    +DateTime? LastLoginUtc
+  }
+}
+
+package "Services" {
+  class UserService {
+    +Task<List<User>> GetAllAsync()
+    +Task<User?> GetByIdAsync(string id)
+    +Task CreateAsync(User user)
+    +Task UpdateAsync(string id, User user)
+    +Task DeleteAsync(string id)
+  }
+
+  class TaskService {
+    +Task<List<TaskItem>> GetAllAsync()
+    +Task<TaskItem?> GetByIdAsync(string id)
+    +Task<List<TaskItem>> GetByTagAsync(string tag)
+    +Task<List<TaskItem>> GetFilteredAsync(...)
+    +Task CreateAsync(TaskItem task)
+    +Task UpdateAsync(string id, TaskItem task)
+    +Task DeleteAsync(string id)
+    +Task SetDoneAsync(string id, bool isDone)
+  }
+
+  class AdminAuthService {
+    +Task EnsureSeedAdminAsync(AdminBootstrapSettings bootstrap)
+    +Task<AdminSignInResult> ValidateCredentialsAsync(string username, string password)
+  }
+
+  class AdminSignInResult {
+    +bool IsSuccess
+    +bool IsLockedOut
+    +DateTime? LockoutEndUtc
+    +AdminUser? User
+  }
+}
+
+package "Configuration" {
+  class MongoSettings {
+    +string ConnectionString
+    +string DatabaseName
+    +string UsersCollectionName
+    +string TasksCollectionName
+    +string AdminUsersCollectionName
+  }
+
+  class AdminBootstrapSettings {
+    +string Username
+    +string Password
+    +string DisplayName
+  }
+}
+
+User "1" <-- "0..*" TaskItem : assigned to
+
+UserService ..> User
+TaskService ..> TaskItem
+AdminAuthService ..> AdminUser
+AdminAuthService ..> AdminSignInResult
+AdminAuthService ..> AdminBootstrapSettings
+
+UserService ..> MongoSettings
+TaskService ..> MongoSettings
+AdminAuthService ..> MongoSettings
+
+@enduml
